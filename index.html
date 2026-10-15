@@ -824,9 +824,17 @@
         const pertemuanGroup = { "Pertemuan 1 (Senin)": [], "Pertemuan 2 (Kamis)": [], "Lainnya": [] };
 
         currentFilteredAbsensi.forEach(item => {
-            // Membaca fleksibel semua nama kolom Pertemuan dari Google Sheets
-            const p = String(item["Pertemuan Ke -"] || item["Pertemuan Ke-"] || item.Pertemuan || item.pertemuan || item.Pertemuan_Ke || "").toLowerCase();
+            // Ambil data dari berbagai kemungkinan nama header kolom di Google Sheets
+            const p = String(
+                item["Pertemuan Ke -"] || 
+                item["Pertemuan Ke-"] || 
+                item.Pertemuan || 
+                item.pertemuan || 
+                item.Pertemuan_Ke || 
+                ""
+            ).toLowerCase();
             
+            // Pengelompokan cerdas berdasarkan angka atau nama hari
             if (p.includes("1") || p.includes("senin")) {
                 pertemuanGroup["Pertemuan 1 (Senin)"].push(item);
             } else if (p.includes("2") || p.includes("kamis")) {
@@ -845,27 +853,29 @@
                     </tr>`;
 
                 pertemuanGroup[groupTitle].forEach(row => {
-                    // Membaca fleksibel Timestamp / Tanggal
+                    // Membaca Tanggal & TimeStamp dengan Fallback Pembacaan String
                     const rawTs = row.TimeStamp || row.Timestamp || row.timestamp || row.Tanggal || row.tanggal || "";
                     let formattedDate = '-';
                     const d = parseDateSafe(rawTs);
-                    if (d) {
+                    
+                    if (d && !isNaN(d.getTime())) {
                         formattedDate = d.toLocaleDateString('id-ID');
                     } else if (rawTs) {
-                        formattedDate = rawTs.toString().split('T')[0];
+                        // Jika berupa ISO String misal 2026-10-15T08:00:00
+                        formattedDate = String(rawTs).split('T')[0];
                     }
 
-                    // Membaca fleksibel NIS / NISN
+                    // Pembacaan NIS
                     let rawNis = row["NIS/NISN"] || row.NIS || row.nis || row.Nis || '-';
-                    const nis = rawNis.toString().trim() || "-";
+                    const nis = String(rawNis).trim() || "-";
 
-                    // Membaca fleksibel Nama Lengkap
+                    // Pembacaan Nama Lengkap
                     const nama = row["NAMA LENGKAP"] || row.Nama_Lengkap || row.nama_lengkap || row.Nama || row.nama || '-';
 
-                    // Membaca fleksibel Pertemuan
-                    const pertemuan = row["Pertemuan Ke -"] || row["Pertemuan Ke-"] || row.Pertemuan || row.pertemuan || groupTitle;
+                    // Pembacaan Teks Pertemuan Asli
+                    const pertemuanVal = row["Pertemuan Ke -"] || row["Pertemuan Ke-"] || row.Pertemuan || row.pertemuan || groupTitle;
 
-                    // Membaca fleksibel Keterangan Kehadiran
+                    // Pembacaan Keterangan Kehadiran
                     const keterangan = row.Keterangan || row.keterangan || row.Status || row.status || 'Hadir';
 
                     tbody.innerHTML += `
@@ -874,8 +884,8 @@
                             <td>${formattedDate}</td>
                             <td><strong>${nis}</strong></td>
                             <td>${nama}</td>
-                            <td>${pertemuan}</td>
-                            <td><span style="color:${keterangan.toLowerCase() === 'hadir' ? '#2ecc71' : '#ffae00'}; font-weight:bold;">${keterangan}</span></td>
+                            <td>${pertemuanVal}</td>
+                            <td><span style="color:${String(keterangan).toLowerCase() === 'hadir' ? '#2ecc71' : '#ffae00'}; font-weight:bold;">${keterangan}</span></td>
                         </tr>`;
                 });
             }
