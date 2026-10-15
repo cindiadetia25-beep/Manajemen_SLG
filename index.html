@@ -323,12 +323,16 @@
 <div class="container">
     <header>
         <div class="header-title-box">
-            <!-- Pemanggilan Logo Utama Paten dengan Pemulihan Otomatis -->
-            <img id="dashboardLogo" class="custom-logo" src="assets/logo-paskibra.png" alt="Logo Paskibra">
+            <!-- Logo Sebelah Kiri -->
+            <img id="dashboardLogoLeft" class="custom-logo" src="assets/logo-paskibra.png" alt="Logo Paskibra Kiri" onerror="this.onerror=null; this.src='https://cindiadetia25-beep.github.io/Manajemen_SLG/assets/logo-paskibra.png';">
+            
             <h1>
                 DASHBOARD MANAJEMEN SATRIA LASKAR GARUDA
                 <span class="sub-line">(PASKIBRA SMP NEGERI 1 RANCAH)</span>
             </h1>
+
+            <!-- Logo Sebelah Kanan -->
+            <img id="dashboardLogoRight" class="custom-logo" src="assets/logo-paskibra.png" alt="Logo Paskibra Kanan" onerror="this.onerror=null; this.src='https://cindiadetia25-beep.github.io/Manajemen_SLG/assets/logo-paskibra.png';">
         </div>
         <p>Sistem Informasi Anggota, Presensi Latihan Rutin, dan Open Recruitment</p>
         
@@ -788,7 +792,7 @@
         return null;
     }
 
-        function renderPreviewAbsensi() {
+    function renderPreviewAbsensi() {
         const tbody = document.getElementById("tablePreviewAbsensi");
         const tipe = document.getElementById("filterRekapTipe").value;
         tbody.innerHTML = "";
