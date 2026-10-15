@@ -788,7 +788,7 @@
         return null;
     }
 
-    function renderPreviewAbsensi() {
+        function renderPreviewAbsensi() {
         const tbody = document.getElementById("tablePreviewAbsensi");
         const tipe = document.getElementById("filterRekapTipe").value;
         tbody.innerHTML = "";
@@ -802,7 +802,7 @@
         const now = new Date();
         currentFilteredAbsensi = globalAbsensi.filter(a => {
             if (tipe === 'semua') return true;
-            const rawTs = a.TimeStamp || a.Timestamp || a.timestamp || "";
+            const rawTs = a.TimeStamp || a.Timestamp || a.timestamp || a.Tanggal || a.tanggal || "";
             const d = parseDateSafe(rawTs);
             if (!d) return true;
             
@@ -820,10 +820,16 @@
         const pertemuanGroup = { "Pertemuan 1 (Senin)": [], "Pertemuan 2 (Kamis)": [], "Lainnya": [] };
 
         currentFilteredAbsensi.forEach(item => {
-            const p = item["Pertemuan Ke -"] || item.Pertemuan || item.pertemuan || "";
-            if (p.includes("Pertemuan 1")) pertemuanGroup["Pertemuan 1 (Senin)"].push(item);
-            else if (p.includes("Pertemuan 2")) pertemuanGroup["Pertemuan 2 (Kamis)"].push(item);
-            else pertemuanGroup["Lainnya"].push(item);
+            // Membaca fleksibel semua nama kolom Pertemuan dari Google Sheets
+            const p = String(item["Pertemuan Ke -"] || item["Pertemuan Ke-"] || item.Pertemuan || item.pertemuan || item.Pertemuan_Ke || "").toLowerCase();
+            
+            if (p.includes("1") || p.includes("senin")) {
+                pertemuanGroup["Pertemuan 1 (Senin)"].push(item);
+            } else if (p.includes("2") || p.includes("kamis")) {
+                pertemuanGroup["Pertemuan 2 (Kamis)"].push(item);
+            } else {
+                pertemuanGroup["Lainnya"].push(item);
+            }
         });
 
         let globalIndex = 1;
@@ -835,7 +841,8 @@
                     </tr>`;
 
                 pertemuanGroup[groupTitle].forEach(row => {
-                    const rawTs = row.TimeStamp || row.Timestamp || row.timestamp || "";
+                    // Membaca fleksibel Timestamp / Tanggal
+                    const rawTs = row.TimeStamp || row.Timestamp || row.timestamp || row.Tanggal || row.tanggal || "";
                     let formattedDate = '-';
                     const d = parseDateSafe(rawTs);
                     if (d) {
@@ -844,16 +851,27 @@
                         formattedDate = rawTs.toString().split('T')[0];
                     }
 
-                    let rawNis = row.NIS || row.nis || '-';
+                    // Membaca fleksibel NIS / NISN
+                    let rawNis = row["NIS/NISN"] || row.NIS || row.nis || row.Nis || '-';
                     const nis = rawNis.toString().trim() || "-";
+
+                    // Membaca fleksibel Nama Lengkap
+                    const nama = row["NAMA LENGKAP"] || row.Nama_Lengkap || row.nama_lengkap || row.Nama || row.nama || '-';
+
+                    // Membaca fleksibel Pertemuan
+                    const pertemuan = row["Pertemuan Ke -"] || row["Pertemuan Ke-"] || row.Pertemuan || row.pertemuan || groupTitle;
+
+                    // Membaca fleksibel Keterangan Kehadiran
+                    const keterangan = row.Keterangan || row.keterangan || row.Status || row.status || 'Hadir';
+
                     tbody.innerHTML += `
                         <tr>
                             <td><strong>${globalIndex++}</strong></td>
                             <td>${formattedDate}</td>
                             <td><strong>${nis}</strong></td>
-                            <td>${row.Nama_Lengkap || row.nama_lengkap || row.Nama || '-'}</td>
-                            <td>${row["Pertemuan Ke -"] || row.Pertemuan || '-'}</td>
-                            <td>${row.Keterangan || row.keterangan || 'Hadir'}</td>
+                            <td>${nama}</td>
+                            <td>${pertemuan}</td>
+                            <td><span style="color:${keterangan.toLowerCase() === 'hadir' ? '#2ecc71' : '#ffae00'}; font-weight:bold;">${keterangan}</span></td>
                         </tr>`;
                 });
             }
