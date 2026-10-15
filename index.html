@@ -44,19 +44,19 @@
             align-items: center;
         }
 
+        /* 1. KOREKSI LAPTOP: LOGO DEKAT DENGAN JUDUL */
         .header-title-box {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            flex-wrap: nowrap;
+            gap: 12px;
             margin-bottom: 8px;
-            width: 100%;
+            max-width: 900px;
         }
 
         .custom-logo {
-            width: 70px;
-            height: 70px;
+            width: 65px;
+            height: 65px;
             object-fit: contain;
             cursor: pointer;
             transition: transform 0.3s;
@@ -68,22 +68,25 @@
 
         header h1 { 
             color: #ffd700; 
-            font-size: 2rem; 
+            font-size: 1.8rem; 
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.5); 
             text-transform: uppercase;
-            line-height: 1.2;
+            line-height: 1.25;
             font-weight: bold;
-            flex: 1;
+        }
+
+        header h1 span.main-title-block {
+            display: block;
         }
 
         header h1 span.sub-line {
             display: block;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             color: #ffffff;
             margin-top: 4px;
         }
         
-        header p { color: #80d4ff; font-size: 1rem; margin-bottom: 12px; font-weight: normal; }
+        header p { color: #80d4ff; font-size: 0.95rem; margin-bottom: 12px; font-weight: normal; }
 
         .header-controls {
             display: flex;
@@ -91,7 +94,6 @@
             gap: 10px;
             flex-wrap: wrap;
             justify-content: center;
-            width: 100%;
         }
 
         .clock-box {
@@ -101,32 +103,33 @@
             background: rgba(0, 180, 216, 0.15);
             border: 1px solid rgba(255, 215, 0, 0.5);
             backdrop-filter: blur(8px);
-            padding: 6px 14px;
+            padding: 5px 14px;
             border-radius: 20px;
             color: #ffd700;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: bold;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
         }
 
+        /* 3. KOREKSI: TOMBOL REFRESH DIPERKECIL */
         .btn-refresh-header {
             background: linear-gradient(45deg, #ffd700, #ffae00);
             color: #000411;
             border: none;
-            padding: 7px 16px;
-            border-radius: 20px;
-            font-size: 0.95rem;
+            padding: 5px 12px;
+            border-radius: 16px;
+            font-size: 0.8rem;
             font-weight: bold;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            gap: 5px;
+            box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
             transition: 0.3s;
         }
 
         .btn-refresh-header:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             opacity: 0.95;
         }
 
@@ -313,30 +316,44 @@
             justify-content: center;
         }
 
-        /* ATURAN KHUSUS LAYAR HP SANGAT KECIL / RESPONSIF */
+        /* 2. KOREKSI HP: TAMPILAN RESPONSIVE & JUDUL 3 BARIS */
         @media (max-width: 600px) {
-            body { padding: 8px; }
+            body { padding: 6px; }
             
-            .header-title-box { gap: 8px; }
+            .header-title-box { 
+                gap: 6px; 
+                width: 100%;
+            }
 
-            .custom-logo { width: 45px; height: 45px; }
+            .custom-logo { 
+                width: 40px; 
+                height: 40px; 
+            }
 
-            header h1 { font-size: 1.1rem; }
+            header h1 { 
+                font-size: 0.95rem; 
+                line-height: 1.3;
+            }
 
-            header h1 span.sub-line { font-size: 0.95rem; }
+            header h1 span.main-title-block {
+                display: block; /* Pemisah otomatis baris 1 & 2 di HP */
+            }
 
-            header p { font-size: 0.85rem; }
+            header h1 span.sub-line { 
+                font-size: 0.8rem; 
+                margin-top: 2px;
+            }
+
+            header p { font-size: 0.8rem; }
 
             .clock-box {
-                font-size: 0.85rem;
-                padding: 5px 10px;
-                width: 100%;
-                justify-content: center;
+                font-size: 0.8rem;
+                padding: 4px 10px;
             }
 
             .btn-refresh-header {
-                width: 100%;
-                justify-content: center;
+                font-size: 0.75rem;
+                padding: 4px 10px;
             }
 
             .nav-tabs {
@@ -345,14 +362,14 @@
             }
 
             .tab-btn { 
-                font-size: 0.9rem; 
-                padding: 10px; 
+                font-size: 0.85rem; 
+                padding: 8px; 
                 width: 100%;
             }
 
-            .card { padding: 12px; }
+            .card { padding: 10px; }
 
-            .card h2 { font-size: 1.2rem; }
+            .card h2 { font-size: 1.1rem; }
 
             .action-box { 
                 flex-direction: column; 
@@ -367,8 +384,8 @@
 
             .btn { 
                 width: 100%; 
-                font-size: 0.85rem;
-                padding: 8px 10px;
+                font-size: 0.8rem;
+                padding: 7px 10px;
             }
 
             .form-grid { grid-template-columns: 1fr; }
@@ -383,8 +400,9 @@
             <!-- Logo Paskibra (Sebelah Kiri) -->
             <img id="dashboardLogoLeft" class="custom-logo" src="assets/logo-paskibra.png" alt="Logo Paskibra Kiri" onerror="this.onerror=null; this.src='https://cindiadetia25-beep.github.io/Manajemen_SLG/assets/logo-paskibra.png';">
             
-            <h1>
-                DASHBOARD MANAJEMEN SATRIA LASKAR GARUDA
+           <h1>
+                <span>DASHBOARD MANAJEMEN</span>
+                <span class="main-title-block">SATRIA LASKAR GARUDA</span>
                 <span class="sub-line">(PASKIBRA SMP NEGERI 1 RANCAH)</span>
             </h1>
 
