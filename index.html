@@ -633,11 +633,10 @@
             const res = await fetch(SCRIPT_URL + "?t=" + new Date().getTime());
             const data = await res.json();
 
-            // Normalisasi data Absensi agar properti nama kolom tidak hilang/salah ketik
             globalDataMaster = data.dataMaster || [];
             globalAbsensi = (data.absensi || []).map(row => {
                 return {
-                    TimeStamp: row.TimeStamp || row.Timestamp || row.timestamp || row.Tanggal || row.tanggal || "",
+                    TimeStamp: row.TimeStamp || row.Timestamp || row.timestamp || row.Tanggal || row.tanggal || new Date().toISOString(),
                     NIS: row["NIS/NISN"] || row.NIS || row.nis || row.Nis || "-",
                     Nama_Lengkap: row["NAMA LENGKAP"] || row.Nama_Lengkap || row.nama_lengkap || row.Nama || row.nama || "-",
                     Pertemuan: row["Pertemuan Ke -"] || row["Pertemuan Ke-"] || row.Pertemuan || row.pertemuan || row.Pertemuan_Ke || "Pertemuan 1 (Senin)",
@@ -786,17 +785,27 @@
 
     function parseDateSafe(rawTs) {
         if (!rawTs) return null;
-        let d = new Date(rawTs);
+        if (rawTs instanceof Date && !isNaN(rawTs.getTime())) return rawTs;
+        
+        let str = String(rawTs).trim();
+        let d = new Date(str);
         if (!isNaN(d.getTime())) return d;
         
-        let parts = rawTs.toString().split(/[\/\-\s]/);
-        if (parts.length >= 3) {
-            let day = parseInt(parts[0]);
-            let month = parseInt(parts[1]) - 1;
-            let year = parseInt(parts[2]);
-            if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
-                return new Date(year, month, day);
+        let dateParts = str.split(/[\sT]+/)[0];
+        let parts = dateParts.split(/[\/\-\.]/);
+        
+        if (parts.length === 3) {
+            let p0 = parseInt(parts[0], 10);
+            let p1 = parseInt(parts[1], 10);
+            let p2 = parseInt(parts[2], 10);
+            
+            if (p0 > 12 && p0 <= 31) {
+                return new Date(p2, p1 - 1, p0);
             }
+            if (p0 > 1000) {
+                return new Date(p0, p1 - 1, p2);
+            }
+            return new Date(p2, p0 - 1, p1);
         }
         return null;
     }
@@ -1002,20 +1011,23 @@
         const pertemuan = document.getElementById("absensiPertemuan").value;
         const keterangan = document.getElementById("absensiStatus").value;
 
+        const now = new Date();
+        const formattedToday = now.toLocaleDateString('id-ID');
+
         globalAbsensi.unshift({
-            TimeStamp: new Date().toISOString(),
+            TimeStamp: formattedToday,
             NIS: nis,
             Nama_Lengkap: nama,
             Pertemuan: pertemuan,
             Keterangan: keterangan
         });
+        
         renderPreviewAbsensi();
 
         showCustomAlert("BERHASIL", `Absensi ${nama} berhasil disimpan ke Spreadsheet!`);
         select.value = "";
         sendDataToSheet({ action: "addAbsensi", nis, nama_lengkap: nama, pertemuan, keterangan });
     }
-
     function importExcelOR(event) {
         const file = event.target.files[0];
         if (!file) return;
