@@ -54,11 +54,12 @@
         }
 
         .custom-logo {
-            width: 65px;
-            height: 65px;
+            width: 70px;
+            height: 70px;
             object-fit: contain;
             cursor: pointer;
             transition: transform 0.3s;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.4));
         }
 
         .custom-logo:hover { transform: scale(1.08); }
@@ -310,7 +311,7 @@
         @media (max-width: 600px) {
             header h1 { font-size: 1.5rem; }
             header h1 span.sub-line { font-size: 1.2rem; }
-            .custom-logo { width: 50px; height: 50px; }
+            .custom-logo { width: 55px; height: 55px; }
             .tab-btn { font-size: 1rem; padding: 8px 12px; }
             .action-box { flex-direction: column; align-items: stretch; }
             .btn { width: 100%; }
@@ -322,7 +323,8 @@
 <div class="container">
     <header>
         <div class="header-title-box">
-            <img id="dashboardLogo" class="custom-logo" src="assets/logo-paskibra.png" alt="Logo Paskibra">
+            <!-- Pemasangan Logo Paten dari Folder Assets -->
+            <img id="dashboardLogo" class="custom-logo" src="assets/logo-paskibra.png" alt="Logo Paskibra" onerror="this.onerror=null; this.src='logo-paskibra.png';">
             <h1>
                 DASHBOARD MANAJEMEN SATRIA LASKAR GARUDA
                 <span class="sub-line">(PASKIBRA SMP NEGERI 1 RANCAH)</span>
@@ -372,7 +374,7 @@
         </form>
 
         <div class="action-box">
-            <span><strong>Terkoneksi dengan Sheet DATA MASTER ANGGOTA</strong></span>
+            <span><strong style="color:#2ecc71;"><i class="fas fa-link"></i> Terkoneksi dengan Google Spreadsheet (DATA MASTER ANGGOTA)</strong></span>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
                 <button class="btn btn-download" onclick="downloadExcelDenganKop('anggota')"><i class="fas fa-file-download"></i> DOWNLOAD EXCEL ANGGOTA</button>
                 <button class="btn btn-danger-all" onclick="confirmClearAll('anggota')"><i class="fas fa-trash-restore"></i> HAPUS SEMUA DATA ANGGOTA</button>
@@ -392,7 +394,7 @@
                     </tr>
                 </thead>
                 <tbody id="tableAnggota">
-                    <tr><td colspan="6" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Memuat data master anggota...</td></tr>
+                    <tr><td colspan="6" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Memuat data master anggota dari Spreadsheet...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -459,7 +461,7 @@
                     </tr>
                 </thead>
                 <tbody id="tablePreviewAbsensi">
-                    <tr><td colspan="6" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Memuat preview rekap absensi...</td></tr>
+                    <tr><td colspan="6" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Memuat preview rekap absensi dari Spreadsheet...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -497,7 +499,7 @@
                     </tr>
                 </thead>
                 <tbody id="tableOR">
-                    <tr><td colspan="7" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Memuat data pendaftar...</td></tr>
+                    <tr><td colspan="7" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Memuat data pendaftar dari Spreadsheet...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -548,7 +550,8 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzQmY4XGvBLnoeHRo6W4gMFXQAbNESiv8ZLN0fkGIgtMxLA_riQmBRFp-hyCLXDG6D/exec";
+    // URL Web App Apps Script terhubung penuh dengan Google Spreadsheet
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyklWDbSSHb9srgEwLy4ZxLuy64mmCFCPCmd9eYuYx11WAvYR2-53kvOJ6Jle0UdKq0/exec";
     
     let globalDataMaster = [];
     let globalAbsensi = [];
@@ -613,13 +616,13 @@
 
     async function loadData() {
         if (globalDataMaster.length === 0) {
-            document.getElementById("tableAnggota").innerHTML = "<tr><td colspan='6' style='text-align:center;'><i class='fas fa-spinner fa-spin'></i> Memuat data master anggota...</td></tr>";
+            document.getElementById("tableAnggota").innerHTML = "<tr><td colspan='6' style='text-align:center;'><i class='fas fa-spinner fa-spin'></i> Memuat data master anggota dari Spreadsheet...</td></tr>";
         }
         if (globalAbsensi.length === 0) {
-            document.getElementById("tablePreviewAbsensi").innerHTML = "<tr><td colspan='6' style='text-align:center;'><i class='fas fa-spinner fa-spin'></i> Memuat rekap absensi...</td></tr>";
+            document.getElementById("tablePreviewAbsensi").innerHTML = "<tr><td colspan='6' style='text-align:center;'><i class='fas fa-spinner fa-spin'></i> Memuat rekap absensi dari Spreadsheet...</td></tr>";
         }
         if (globalRecruitment.length === 0) {
-            document.getElementById("tableOR").innerHTML = "<tr><td colspan='7' style='text-align:center;'><i class='fas fa-spinner fa-spin'></i> Memuat data pendaftar...</td></tr>";
+            document.getElementById("tableOR").innerHTML = "<tr><td colspan='7' style='text-align:center;'><i class='fas fa-spinner fa-spin'></i> Memuat data pendaftar dari Spreadsheet...</td></tr>";
         }
 
         try {
@@ -633,7 +636,7 @@
             renderAllTables();
         } catch (err) {
             console.error("Gagal memuat data:", err);
-            document.getElementById("tableAnggota").innerHTML = "<tr><td colspan='6' style='text-align:center; color:#ff6b6b;'>Gagal memuat data. Periksa koneksi Web App Apps Script Anda.</td></tr>";
+            document.getElementById("tableAnggota").innerHTML = "<tr><td colspan='6' style='text-align:center; color:#ff6b6b;'>Gagal terhubung ke Spreadsheet. Pastikan Web App Apps Script sudah di-Deploy dengan akses 'Anyone'.</td></tr>";
         }
     }
 
@@ -709,12 +712,12 @@
             renderAllTables();
         }
 
-        showCustomAlert("BERHASIL", "Data anggota berhasil diperbarui!");
+        showCustomAlert("BERHASIL", "Data anggota berhasil diperbarui di Spreadsheet!");
         sendDataToSheet({ action: "updateAnggota", oldNis, oldNama, nis, nama_lengkap: nama, kelas, jabatan });
     }
 
     function deleteAnggota(nis, nama) {
-        showCustomConfirm("HAPUS ANGGOTA", `Apakah Anda yakin ingin menghapus ${nama} [NIS: ${nis}] dari Data Master dan Open Recruitment?`, () => {
+        showCustomConfirm("HAPUS ANGGOTA", `Apakah Anda yakin ingin menghapus ${nama} [NIS: ${nis}] dari Data Master dan Open Recruitment di Spreadsheet?`, () => {
             globalDataMaster = globalDataMaster.filter(a => {
                 let rNis = String(a["NIS/NISN"] || a["NIS"] || a["nis"] || "").trim();
                 let rNama = String(a["NAMA LENGKAP"] || a["Nama_Lengkap"] || a["nama"] || "").trim();
@@ -728,20 +731,20 @@
             });
 
             renderAllTables();
-            showCustomAlert("TERHAPUS", "Data anggota berhasil dihapus!");
+            showCustomAlert("TERHAPUS", "Data anggota berhasil dihapus dari Spreadsheet!");
             sendDataToSheet({ action: "deleteAnggota", nis, nama_lengkap: nama });
         });
     }
 
     function confirmClearAll(section) {
         let sectionName = section === 'anggota' ? 'DATA MASTER ANGGOTA' : (section === 'absensi' ? 'REKAP ABSENSI' : 'DATA OPEN RECRUITMENT');
-        showCustomConfirm("HAPUS SEMUA DATA", `PERINGATAN! Seluruh isi ${sectionName} akan dihapus secara permanen. Lanjutkan?`, () => {
+        showCustomConfirm("HAPUS SEMUA DATA", `PERINGATAN! Seluruh isi ${sectionName} di Spreadsheet akan dihapus secara permanen. Lanjutkan?`, () => {
             if (section === 'anggota') globalDataMaster = [];
             else if (section === 'absensi') { globalAbsensi = []; currentFilteredAbsensi = []; }
             else if (section === 'recruitment') globalRecruitment = [];
 
             renderAllTables();
-            showCustomAlert("PEMBERSIHAN DATA", `Seluruh isi ${sectionName} telah dihapus!`);
+            showCustomAlert("PEMBERSIHAN DATA", `Seluruh isi ${sectionName} telah dihapus dari Spreadsheet!`);
             sendDataToSheet({ action: "clearAll", section: section });
         });
     }
@@ -791,7 +794,7 @@
         tbody.innerHTML = "";
 
         if (!globalAbsensi.length) {
-            tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;'>Belum ada data absensi.</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='6' style='text-align:center;'>Belum ada data absensi di Spreadsheet.</td></tr>";
             currentFilteredAbsensi = [];
             return;
         }
@@ -891,7 +894,7 @@
                     </tr>`;
             });
         } else {
-            tbody.innerHTML = "<tr><td colspan='7' style='text-align:center;'>Belum ada data pendaftar calon Paskibra.</td></tr>";
+            tbody.innerHTML = "<tr><td colspan='7' style='text-align:center;'>Belum ada data pendaftar calon Paskibra di Spreadsheet.</td></tr>";
         }
     }
 
@@ -915,7 +918,7 @@
         });
 
         renderAllTables();
-        showCustomAlert("BERHASIL", `Pendaftar ${nama} telah di-approve dan masuk ke Data Master Anggota!`);
+        showCustomAlert("BERHASIL", `Pendaftar ${nama} telah di-approve dan tersimpan di Spreadsheet!`);
 
         sendDataToSheet({
             action: "updateStatusRecruitment",
@@ -942,7 +945,7 @@
         });
         renderAllTables();
 
-        showCustomAlert("BERHASIL", "Anggota baru berhasil ditambahkan!");
+        showCustomAlert("BERHASIL", "Anggota baru berhasil ditambahkan ke Spreadsheet!");
         e.target.reset();
         sendDataToSheet({ action: "addAnggota", nis, nama_lengkap: nama, kelas, jabatan });
     }
@@ -967,7 +970,7 @@
         });
         renderPreviewAbsensi();
 
-        showCustomAlert("BERHASIL", `Absensi ${nama} berhasil disimpan!`);
+        showCustomAlert("BERHASIL", `Absensi ${nama} berhasil disimpan ke Spreadsheet!`);
         select.value = "";
         sendDataToSheet({ action: "addAbsensi", nis, nama_lengkap: nama, pertemuan, keterangan });
     }
@@ -993,7 +996,7 @@
                         alasan_bergabung: row.Alasan_Bergabung || row.Alasan || row.alasan || ""
                     });
                 }
-                showCustomAlert("UPLOAD SUKSES", "Berhasil mengunggah data Excel OR!");
+                showCustomAlert("UPLOAD SUKSES", "Berhasil mengunggah data Excel OR ke Spreadsheet!");
                 loadData();
             } catch (err) { showCustomAlert("ERROR", "Gagal memproses file Excel OR.", "fa-times-circle"); }
         };
