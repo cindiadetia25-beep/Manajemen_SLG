@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Manajemen SATRIA LASKAR GARUDA PASKIBRA SMPN 1 RANCAH</title>
+    <title>DASHBOARD MANAJEMEN SATRIA LASKAR GARUDA (PASKIBRA SMP NEGERI 1 RANCAH)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/american-captain" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/deathe-maach-ncv" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <style>
@@ -13,13 +13,18 @@
             box-sizing: border-box; 
             margin: 0; 
             padding: 0; 
-            font-family: 'American Captain', 'Segoe UI', sans-serif;
+            font-family: 'Deathe Maach NCV', 'Segoe UI', sans-serif;
             letter-spacing: 1px;
             font-weight: normal;
         }
 
+        /* Teks Kapital / Header Otomatis Tebal */
+        h1, h2, h3, th, button, .btn, .tab-btn, .clock-box, strong, b, option {
+            font-weight: bold !important;
+        }
+
         body { 
-            background: linear-gradient(135deg, #4a000b 0%, #2b0006 50%, #800000 100%);
+            background: linear-gradient(135deg, #0a1128 0%, #000411 50%, #1c2541 100%);
             min-height: 100vh; 
             color: #fff; 
             padding: 15px; 
@@ -60,13 +65,21 @@
 
         header h1 { 
             color: #ffd700; 
-            font-size: 2.3rem; 
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.4); 
+            font-size: 2.2rem; 
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.5); 
             text-transform: uppercase;
-            line-height: 1.1;
+            line-height: 1.2;
+            font-weight: bold;
+        }
+
+        header h1 span.sub-line {
+            display: block;
+            font-size: 1.8rem;
+            color: #ffffff;
+            margin-top: 4px;
         }
         
-        header p { color: #ffcc66; font-size: 1.1rem; margin-bottom: 12px; }
+        header p { color: #80d4ff; font-size: 1.05rem; margin-bottom: 12px; font-weight: normal; }
 
         .header-controls {
             display: flex;
@@ -80,19 +93,20 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            background: rgba(255, 215, 0, 0.15);
-            border: 1px solid rgba(255, 215, 0, 0.4);
+            background: rgba(0, 180, 216, 0.15);
+            border: 1px solid rgba(255, 215, 0, 0.5);
             backdrop-filter: blur(8px);
             padding: 6px 18px;
             border-radius: 20px;
             color: #ffd700;
             font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
         }
 
         .btn-refresh-header {
-            background: linear-gradient(45deg, #ffd700, #ffaa00);
-            color: #4a000b;
+            background: linear-gradient(45deg, #ffd700, #ffae00);
+            color: #000411;
             border: none;
             padding: 7px 16px;
             border-radius: 20px;
@@ -121,12 +135,13 @@
 
         .tab-btn { 
             padding: 10px 18px; 
-            background: rgba(0, 0, 0, 0.4); 
-            border: 1px solid rgba(255, 215, 0, 0.3); 
+            background: rgba(0, 4, 17, 0.6); 
+            border: 1px solid rgba(0, 180, 216, 0.4); 
             color: #fff; 
             border-radius: 10px; 
             cursor: pointer; 
             font-size: 1.15rem;
+            font-weight: bold;
             transition: all 0.3s ease; 
             flex: 1 1 auto;
             text-align: center;
@@ -134,26 +149,27 @@
 
         .tab-btn.active, .tab-btn:hover { 
             background: #ffd700; 
-            color: #4a000b; 
+            color: #000411; 
             border-color: #ffd700; 
             box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); 
         }
 
         .card { 
-            background: rgba(50, 0, 10, 0.65); 
+            background: rgba(10, 17, 40, 0.75); 
             backdrop-filter: blur(12px); 
-            border: 1px solid rgba(255, 215, 0, 0.25); 
+            border: 1px solid rgba(255, 215, 0, 0.3); 
             border-radius: 16px; 
             padding: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); 
             margin-bottom: 20px; 
         }
 
         .card h2 {
             color: #ffd700;
             font-size: 1.8rem;
+            font-weight: bold;
             margin-bottom: 15px;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 2px solid rgba(0, 180, 216, 0.4);
             padding-bottom: 8px;
         }
 
@@ -167,10 +183,10 @@
             flex-wrap: wrap; 
             align-items: center; 
             justify-content: space-between; 
-            background: rgba(0, 0, 0, 0.3); 
+            background: rgba(0, 4, 17, 0.5); 
             padding: 12px; 
             border-radius: 10px; 
-            border: 1px solid rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(0, 180, 216, 0.25);
         }
 
         .table-wrapper {
@@ -180,11 +196,11 @@
         }
 
         table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 650px; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.95rem; word-break: break-word; }
-        th { background: rgba(255, 215, 0, 0.2); color: #ffd700; font-size: 1.1rem; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid rgba(0, 180, 216, 0.15); font-size: 0.95rem; word-break: break-word; font-weight: normal; }
+        th { background: rgba(0, 119, 182, 0.35); color: #ffd700; font-size: 1.1rem; font-weight: bold; }
 
         tr.divider-pertemuan {
-            background-color: rgba(255, 215, 0, 0.3);
+            background-color: rgba(0, 180, 216, 0.25);
             border-top: 3px solid #ffd700;
             border-bottom: 3px solid #ffd700;
         }
@@ -197,25 +213,27 @@
 
         .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-bottom: 12px; }
         .form-group { margin-bottom: 12px; }
-        .form-group label { display: block; margin-bottom: 5px; color: #ffcc66; font-size: 0.95rem; }
+        .form-group label { display: block; margin-bottom: 5px; color: #80d4ff; font-size: 0.95rem; font-weight: normal; }
         .form-group input, .form-group select { 
             width: 100%; 
             padding: 10px; 
             border-radius: 8px; 
-            border: 1px solid rgba(255, 215, 0, 0.3); 
-            background: rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(0, 180, 216, 0.4); 
+            background: rgba(0, 4, 17, 0.6); 
             color: #fff; 
             font-size: 0.95rem;
+            font-weight: normal;
         }
-        .form-group option { background: #2b0006; color: #fff; }
+        .form-group option { background: #0a1128; color: #fff; }
         
         .btn { 
             padding: 10px 18px; 
             border: none; 
-            color: #4a000b; 
+            color: #000411; 
             border-radius: 8px; 
             cursor: pointer; 
             font-size: 1.05rem;
+            font-weight: bold;
             display: inline-flex; 
             align-items: center; 
             justify-content: center;
@@ -224,14 +242,14 @@
             text-transform: uppercase;
         }
 
-        .btn-primary { background: linear-gradient(45deg, #ffd700, #ffaa00); }
+        .btn-primary { background: linear-gradient(45deg, #ffd700, #ffae00); }
         .btn-approve { background: linear-gradient(45deg, #27ae60, #2ecc71); color: #fff; padding: 6px 12px; font-size: 0.9rem; }
-        .btn-excel { background: linear-gradient(45deg, #27ae60, #2ecc71); color: #fff; }
-        .btn-download { background: linear-gradient(45deg, #e67e22, #f39c12); color: #fff; }
-        .btn-edit { background: #f39c12; color: #fff; padding: 5px 10px; font-size: 0.85rem; }
+        .btn-excel { background: linear-gradient(45deg, #0077b6, #00b4d8); color: #fff; }
+        .btn-download { background: linear-gradient(45deg, #023e8a, #0077b6); color: #fff; border: 1px solid #00b4d8; }
+        .btn-edit { background: #ffae00; color: #000411; padding: 5px 10px; font-size: 0.85rem; }
         .btn-delete { background: #e74c3c; color: #fff; padding: 5px 10px; font-size: 0.85rem; }
-        .btn-danger-all { background: linear-gradient(45deg, #c0392b, #e74c3c); color: #fff; border: 1px solid #ff6b6b; }
-        .btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .btn-danger-all { background: linear-gradient(45deg, #900c3f, #c70039); color: #fff; border: 1px solid #ff5733; }
+        .btn:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
 
         .file-input-wrapper { position: relative; overflow: hidden; display: inline-block; }
         .file-input-wrapper input[type=file] { font-size: 100px; position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
@@ -245,14 +263,14 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 4, 17, 0.85);
             backdrop-filter: blur(6px);
             justify-content: center;
             align-items: center;
         }
 
         .modal-content {
-            background: #32000a;
+            background: #0a1128;
             border: 2px solid #ffd700;
             padding: 25px;
             border-radius: 16px;
@@ -272,13 +290,15 @@
             color: #ffd700;
             margin-bottom: 12px;
             font-size: 1.7rem;
+            font-weight: bold;
         }
 
         .modal-content p {
-            color: #ffcc66;
+            color: #80d4ff;
             font-size: 1.05rem;
             margin-bottom: 20px;
             line-height: 1.4;
+            font-weight: normal;
         }
 
         .modal-actions {
@@ -288,7 +308,8 @@
         }
 
         @media (max-width: 600px) {
-            header h1 { font-size: 1.6rem; }
+            header h1 { font-size: 1.5rem; }
+            header h1 span.sub-line { font-size: 1.2rem; }
             .custom-logo { width: 50px; height: 50px; }
             .tab-btn { font-size: 1rem; padding: 8px 12px; }
             .action-box { flex-direction: column; align-items: stretch; }
@@ -302,7 +323,10 @@
     <header>
         <div class="header-title-box">
             <img id="dashboardLogo" class="custom-logo" src="assets/logo-paskibra.png" alt="Logo Paskibra">
-            <h1>DASHBOARD MANAJEMEN SATRIA LASKAR GARUDA PASKIBRA SMPN 1 RANCAH</h1>
+            <h1>
+                DASHBOARD MANAJEMEN SATRIA LASKAR GARUDA
+                <span class="sub-line">(PASKIBRA SMP NEGERI 1 RANCAH)</span>
+            </h1>
         </div>
         <p>Sistem Informasi Anggota, Presensi Latihan Rutin, dan Open Recruitment</p>
         
@@ -389,8 +413,7 @@
                 <label>Hari / Pertemuan Latihan Rutin</label>
                 <select id="absensiPertemuan" required>
                     <option value="Pertemuan 1 (Senin)">Pertemuan 1 (Senin)</option>
-                    <option value="Pertemuan 2 (Selasa)">Pertemuan 2 (Selasa)</option>
-                    <option value="Pertemuan 3 (Rabu)">Pertemuan 3 (Rabu)</option>
+                    <option value="Pertemuan 2 (Kamis)">Pertemuan 2 (Kamis)</option>
                 </select>
             </div>
             <div class="form-group">
@@ -405,13 +428,13 @@
             <button type="submit" class="btn btn-primary" style="width: 100%;"><i class="fas fa-save"></i> SIMPAN ABSENSI LATIHAN</button>
         </form>
 
-        <hr style="border: 0; border-top: 1px solid rgba(255,215,0,0.2); margin: 25px 0;">
+        <hr style="border: 0; border-top: 1px solid rgba(0, 180, 216, 0.3); margin: 25px 0;">
 
         <h2>PREVIEW REKAP ABSENSI LATIHAN</h2>
         <div class="action-box">
             <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
                 <span><strong>Filter Preview & Laporan:</strong></span>
-                <select id="filterRekapTipe" onchange="renderPreviewAbsensi()" style="padding: 8px; border-radius: 6px; background: #2b0006; color: #fff; border: 1px solid #ffd700;">
+                <select id="filterRekapTipe" onchange="renderPreviewAbsensi()" style="padding: 8px; border-radius: 6px; background: #000411; color: #fff; border: 1px solid #ffd700;">
                     <option value="semua">Semua Riwayat Absensi</option>
                     <option value="mingguan">Rekap Mingguan (7 Hari Terakhir)</option>
                     <option value="bulanan">Rekap Bulanan (30 Hari Terakhir)</option>
@@ -525,7 +548,7 @@
 </div>
 
 <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyklWDbSSHb9srgEwLy4ZxLuy64mmCFCPCmd9eYuYx11WAvYR2-53kvOJ6Jle0UdKq0/exec";
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxzQmY4XGvBLnoeHRo6W4gMFXQAbNESiv8ZLN0fkGIgtMxLA_riQmBRFp-hyCLXDG6D/exec";
     
     let globalDataMaster = [];
     let globalAbsensi = [];
@@ -540,7 +563,7 @@
     }
 
     function showCustomConfirm(title, message, onConfirmCallback) {
-        document.getElementById("dialogTitle").innerHTML = `<i class="fas fa-exclamation-triangle" style="color:#f39c12;"></i> ${title}`;
+        document.getElementById("dialogTitle").innerHTML = `<i class="fas fa-exclamation-triangle" style="color:#ffae00;"></i> ${title}`;
         document.getElementById("dialogMessage").innerText = message;
         document.getElementById("dialogActions").innerHTML = `
             <button class="btn btn-primary" id="btnConfirmYes" style="flex:1;">YA, PROSES</button>
@@ -791,13 +814,12 @@
             return;
         }
 
-        const pertemuanGroup = { "Pertemuan 1 (Senin)": [], "Pertemuan 2 (Selasa)": [], "Pertemuan 3 (Rabu)": [], "Lainnya": [] };
+        const pertemuanGroup = { "Pertemuan 1 (Senin)": [], "Pertemuan 2 (Kamis)": [], "Lainnya": [] };
 
         currentFilteredAbsensi.forEach(item => {
             const p = item["Pertemuan Ke -"] || item.Pertemuan || item.pertemuan || "";
             if (p.includes("Pertemuan 1")) pertemuanGroup["Pertemuan 1 (Senin)"].push(item);
-            else if (p.includes("Pertemuan 2")) pertemuanGroup["Pertemuan 2 (Selasa)"].push(item);
-            else if (p.includes("Pertemuan 3")) pertemuanGroup["Pertemuan 3 (Rabu)"].push(item);
+            else if (p.includes("Pertemuan 2")) pertemuanGroup["Pertemuan 2 (Kamis)"].push(item);
             else pertemuanGroup["Lainnya"].push(item);
         });
 
@@ -862,7 +884,7 @@
                         <td>${nama}</td>
                         <td>${alumni}</td>
                         <td>${kelas}</td>
-                        <td><span style="color:${isAccepted ? '#2ecc71' : '#f39c12'}; font-weight:bold;">${status}</span></td>
+                        <td><span style="color:${isAccepted ? '#2ecc71' : '#ffae00'}; font-weight:bold;">${status}</span></td>
                         <td>
                             ${!isAccepted ? `<button class="btn btn-approve" onclick="approveOR('${nama.replace(/'/g, "\\'")}', '${kelas}')"><i class="fas fa-check-circle"></i> APPROVE / TERIMA</button>` : `<i class="fas fa-user-check" style="color:#2ecc71;"></i> Terverifikasi`}
                         </td>
@@ -984,7 +1006,7 @@
         let filename = "";
 
         if (tipe === 'anggota') {
-            title = "LAPORAN DATA MASTER ANGGOTA SATRIA LASKAR GARUDA PASKIBRA SMPN 1 RANCAH";
+            title = "LAPORAN DATA MASTER ANGGOTA SATRIA LASKAR GARUDA (PASKIBRA SMP NEGERI 1 RANCAH)";
             dataToExport = globalDataMaster;
             filename = "Data_Anggota_Paskibra.xls";
         } else if (tipe === 'absensi') {
@@ -1007,10 +1029,10 @@
                     body { font-family: 'Segoe UI', Arial, sans-serif; }
                     .header-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
                     .header-table td { border: none; text-align: center; vertical-align: middle; }
-                    .title { font-size: 16pt; font-weight: bold; color: #4a000b; }
+                    .title { font-size: 16pt; font-weight: bold; color: #000411; }
                     .subtitle { font-size: 11pt; color: #555; }
                     .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                    .data-table th { background-color: #ffd700; color: #4a000b; font-weight: bold; border: 1px solid #999; padding: 8px; }
+                    .data-table th { background-color: #ffd700; color: #000411; font-weight: bold; border: 1px solid #999; padding: 8px; }
                     .data-table td { border: 1px solid #ccc; padding: 6px; text-align: left; }
                 </style>
             </head>
@@ -1019,7 +1041,7 @@
                     <tr>
                         <td width="100%">
                             <div class="title">${title}</div>
-                            <div class="subtitle">SATRIA LASKAR GARUDA PASKIBRA SMPN 1 RANCAH</div>
+                            <div class="subtitle">SATRIA LASKAR GARUDA (PASKIBRA SMP NEGERI 1 RANCAH)</div>
                             <div class="subtitle">Dicetak Pada: ${new Date().toLocaleDateString('id-ID')}</div>
                         </td>
                     </tr>
